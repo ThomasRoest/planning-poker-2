@@ -3,10 +3,7 @@ import { VoteOptionsGrid } from "./styles";
 import { IParticipant } from "../../types";
 import { gql, useMutation } from "@apollo/client";
 import { Box, Button } from "@chakra-ui/react";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-} from "@chakra-ui/icons";
+import { ArrowDownIcon, ArrowUpIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 interface VoteFormProps {
   userId: number;
@@ -40,7 +37,7 @@ const SET_PRIORITY = gql`
   }
 `;
 
-type Priority = "HIGH" | "LOW" | null;
+type Priority = "HIGH" | "LOW" | "MEDIUM" | null;
 
 export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const [createVote] = useMutation<any>(CREATE_VOTE);
@@ -92,34 +89,36 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
       </VoteOptionsGrid>
       <Box mt={5}>
         <Box as="span" mr={5}>
-          Ticket priority
+          Value
         </Box>
         <Button
           size="sm"
-          rightIcon={
-            <ArrowDownIcon
-              color={activePriority === "LOW" ? "white" : "green.500"}
-            />
-          }
+          rightIcon={<ArrowDownIcon color={activePriority === "LOW" ? "white" : "blue.500"} />}
           colorScheme={activePriority === "LOW" ? "teal" : "gray"}
           variant="solid"
           mr={2}
           onClick={() => handleSetPriority("LOW")}
         >
-          low
+          Low
         </Button>
         <Button
           size="sm"
-          rightIcon={
-            <ArrowUpIcon
-              color={activePriority === "HIGH" ? "white" : "red.500"}
-            />
-          }
+          rightIcon={<HamburgerIcon color={activePriority === "MEDIUM" ? "white" : "orange.500"} />}
+          colorScheme={activePriority === "MEDIUM" ? "teal" : "gray"}
+          variant="solid"
+          mr={2}
+          onClick={() => handleSetPriority("MEDIUM")}
+        >
+          Medium
+        </Button>
+        <Button
+          size="sm"
+          rightIcon={<ArrowUpIcon color={activePriority === "HIGH" ? "white" : "green.500"} />}
           colorScheme={activePriority === "HIGH" ? "teal" : "gray"}
           variant="solid"
           onClick={() => handleSetPriority("HIGH")}
         >
-          high
+          High
         </Button>
       </Box>
     </Box>

@@ -15,7 +15,39 @@ import {
   IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ArrowDownIcon, ArrowUpIcon, CheckCircleIcon, DeleteIcon } from "@chakra-ui/icons";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CheckCircleIcon,
+  DeleteIcon,
+  HamburgerIcon,
+} from "@chakra-ui/icons";
+
+const Value = ({ priority }: { priority: string }) => {
+  switch (priority) {
+    case "HIGH":
+      return (
+        <span>
+          <ArrowUpIcon color="green.500" ml={5} mb={1} />
+        </span>
+      );
+    case "LOW":
+      return (
+        <span>
+          <ArrowDownIcon color="blue.500" ml={5} mb={1} />
+        </span>
+      );
+    case "MEDIUM":
+      return (
+        <span>
+          <HamburgerIcon color="orange.500" ml={5} mb={1} />
+        </span>
+      );
+
+    default:
+      return null;
+  }
+};
 
 const DELETE_USER = gql`
   mutation createParticipant($id: Int!) {
@@ -47,8 +79,8 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
 
-  const listItemColor = useColorModeValue('green.100', 'green.700')
-  const checkIconColor = useColorModeValue('green.500', 'green.300')
+  const listItemColor = useColorModeValue("green.100", "green.700");
+  const checkIconColor = useColorModeValue("green.500", "green.300");
 
   if (typeof result === "number") {
     return (
@@ -62,19 +94,10 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                   <Box minW="45px">
                     {participant.vote}
                     {participant.priority && (
-                      <span>
-                        {participant.priority === "HIGH" ? (
-                          <ArrowUpIcon
-                            color="red.500"
-                            ml={1}
-                          />
-                        ) : (
-                          <ArrowDownIcon
-                            color="green.500"
-                            ml={1}
-                          />
-                        )}
-                      </span>
+                      <Value
+                        key={participant.id}
+                        priority={participant.priority}
+                      />
                     )}
                   </Box>
                 </Box>
