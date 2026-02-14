@@ -1,7 +1,6 @@
 ## made with
 
-- Hasura https://hasura.io/
-- Apollo client https://www.apollographql.com/docs/react/
+- Convex https://convex.dev/
 - Chakra UI https://chakra-ui.com/
 - Vite https://vitejs.dev/
 

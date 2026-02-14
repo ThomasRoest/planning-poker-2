@@ -2,22 +2,20 @@ import React from "react";
 import { Layout } from "./components/Layout";
 import { SessionPage } from "./pages/Session";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createApolloClient } from "./apollo-client";
 import { UserContext } from "./userContext";
 import About from "./pages/About";
-import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/Login";
 import { AuthContextProvider, PrivateRoute } from "./components/Auth/AuthProvider";
 import { CreateSession } from "./pages/CreateSession";
-
-const apolloClient = createApolloClient();
+import { ConvexProvider } from "convex/react";
+import { convex } from "./convex";
 
 const App = () => {
   const [user, setUser] = React.useState(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <ApolloProvider client={apolloClient}>
+      <ConvexProvider client={convex}>
         <ChakraProvider>
           <AuthContextProvider>
             <Router>
@@ -40,7 +38,7 @@ const App = () => {
             </Router>
           </AuthContextProvider>
         </ChakraProvider>
-      </ApolloProvider>
+      </ConvexProvider>
     </UserContext.Provider>
   );
 };

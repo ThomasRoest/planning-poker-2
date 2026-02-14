@@ -2,7 +2,6 @@ import React from "react";
 import { ISession } from "../../types";
 import Confetti from "react-confetti";
 import { UserContext } from "../../userContext";
-import { gql, useMutation } from "@apollo/client";
 import {
   Flex,
   Box,
@@ -22,6 +21,8 @@ import {
   DeleteIcon,
   HamburgerIcon,
 } from "@chakra-ui/icons";
+import { useMutation } from "convex/react";
+import { api } from "../../convex";
 
 const Value = ({ priority }: { priority: string }) => {
   switch (priority) {
@@ -49,25 +50,17 @@ const Value = ({ priority }: { priority: string }) => {
   }
 };
 
-const DELETE_USER = gql`
-  mutation createParticipant($id: Int!) {
-    delete_participants_by_pk(id: $id) {
-      id
-    }
-  }
-`;
-
 interface ParticipantProps {
   session: ISession;
 }
 
 export const ParticipantsList = ({ session }: ParticipantProps) => {
   const { user } = React.useContext(UserContext);
-  const [deleteUser] = useMutation(DELETE_USER);
+  const deleteUser = useMutation(api.participants.deleteParticipant);
 
-  const votes = session.participants
+  const votes: number[] = session.participants
     .map((participant) => participant.vote)
-    .filter((vote) => vote !== null);
+    .filter((vote): vote is number => vote !== null);
 
   let result;
   let consensus;
@@ -153,9 +146,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                 )}
                 {user.owner && (
                   <IconButton
-                    onClick={() =>
-                      deleteUser({ variables: { id: participant.id } })
-                    }
+                    onClick={() => deleteUser({ participantId: participant.id })}
                     variant="outline"
                     aria-label="delete"
                     icon={<DeleteIcon />}

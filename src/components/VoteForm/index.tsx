@@ -1,47 +1,22 @@
 import React from "react";
 import { VoteOptionsGrid } from "./styles";
 import { IParticipant } from "../../types";
-import { gql, useMutation } from "@apollo/client";
 import { Box, Button } from "@chakra-ui/react";
 import { ArrowDownIcon, ArrowUpIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { useMutation } from "convex/react";
+import type { Id } from "../../../convex/_generated/dataModel";
+import { api } from "../../convex";
 
 interface VoteFormProps {
-  userId: number;
+  userId: Id<"participants">;
   participants: IParticipant[];
 }
-
-const CREATE_VOTE = gql`
-  mutation createVote($id: Int, $vote: Float) {
-    update_participants(where: { id: { _eq: $id } }, _set: { vote: $vote }) {
-      affected_rows
-      returning {
-        id
-        vote
-      }
-    }
-  }
-`;
-
-const SET_PRIORITY = gql`
-  mutation createPriority($id: Int, $priority: String) {
-    update_participants(
-      where: { id: { _eq: $id } }
-      _set: { priority: $priority }
-    ) {
-      affected_rows
-      returning {
-        id
-        vote
-      }
-    }
-  }
-`;
 
 type Priority = "HIGH" | "LOW" | "MEDIUM" | null;
 
 export const VoteForm = ({ userId, participants }: VoteFormProps) => {
-  const [createVote] = useMutation<any>(CREATE_VOTE);
-  const [setPriority] = useMutation<any>(SET_PRIORITY);
+  const createVote = useMutation(api.participants.setVote);
+  const setPriority = useMutation(api.participants.setPriority);
   const [activeVote, setActiveVote] = React.useState<number | null>(null);
   const [activePriority, setActivePriority] = React.useState<Priority>(null);
 
@@ -57,16 +32,12 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
 
   const submit = (vote: number) => {
     setActiveVote(vote);
-    createVote({
-      variables: { id: userId, vote },
-    });
+    createVote({ participantId: userId, vote });
   };
 
   const handleSetPriority = (priority: Priority) => {
     setActivePriority(priority);
-    setPriority({
-      variables: { id: userId, priority: priority },
-    });
+    setPriority({ participantId: userId, priority });
   };
 
   const options = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];

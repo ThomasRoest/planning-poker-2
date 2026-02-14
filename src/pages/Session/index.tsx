@@ -5,7 +5,6 @@ import { VoteForm } from "../../components/VoteForm";
 import { ParticipantsList } from "../../components/ParticipantsList";
 import { UserContext } from "../../userContext";
 import copy from "copy-to-clipboard";
-import { gql, useMutation, useSubscription } from "@apollo/client";
 import {
   Badge,
   Box,
@@ -18,56 +17,20 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
-
-export const RESET_VOTES = gql`
-  mutation reset_votes($sessionId: Int) {
-    update_participants(
-      where: { session_id: { _eq: $sessionId } }
-      _set: { vote: null, priority: null }
-    ) {
-      affected_rows
-      returning {
-        id
-        vote
-      }
-    }
-  }
-`;
-
-export const SUBSCRIBE_SESSION = gql`
-  subscription subscribeSession($uid: uuid) {
-    sessions(where: { uid: { _eq: $uid } }) {
-      id
-      title
-      created_at
-      uid
-      participants {
-        id
-        name
-        vote
-        owner
-        priority
-      }
-    }
-  }
-`;
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../convex";
 
 export const SessionPage = () => {
   const { uid } = useParams<{ uid: string }>();
   const { user } = React.useContext(UserContext);
-  const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
-    variables: { uid },
-  });
-
-  const [resetVotes] = useMutation<any>(RESET_VOTES);
+  const session = useQuery(api.sessions.getByUid, { uid });
+  const resetVotes = useMutation(api.participants.resetVotes);
   const toast = useToast();
 
   const borderColor = useColorModeValue("gray.300", "gray.600");
 
-  if (loading) return <Box width="50%">Loading..</Box>;
-  if (error) return <p>Error :( {JSON.stringify(error)} </p>;
-
-  const session = data.sessions[0];
+  if (session === undefined) return <Box width="50%">Loading..</Box>;
+  if (session === null) return <p>Session not found.</p>;
 
   const copyToClipboard = () => {
     const url = window.location.href;
@@ -109,7 +72,7 @@ export const SessionPage = () => {
           </Flex>
           <Button
             mb={4}
-            onClick={() => resetVotes({ variables: { sessionId: session.id } })}
+            onClick={() => resetVotes({ sessionId: session.id })}
           >
             Reset
           </Button>

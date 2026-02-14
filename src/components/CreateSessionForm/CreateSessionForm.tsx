@@ -1,9 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { LoadingCube } from "../LoadingCube";
-import { CREATE_PARTICIPANT } from "../JoinSessionForm";
 import { UserContext } from "../../userContext";
-import { gql, useMutation } from "@apollo/client";
 import {
   useToast,
   Box,
@@ -14,20 +12,8 @@ import {
   Heading,
   useColorModeValue,
 } from "@chakra-ui/react";
-
-const CREATE_SESSION = gql`
-  mutation createSession($title: String) {
-    insert_sessions(objects: { title: $title }) {
-      affected_rows
-      returning {
-        id
-        title
-        uid
-        created_at
-      }
-    }
-  }
-`;
+import { useMutation } from "convex/react";
+import { api } from "../../convex";
 
 export const CreateSessionForm = () => {
   const history = useHistory();
@@ -35,34 +21,39 @@ export const CreateSessionForm = () => {
   const { setUser } = React.useContext(UserContext);
   const [title, setTitle] = React.useState("");
   const [username, setUsername] = React.useState("");
-  const [createSession, { error, loading }] = useMutation<any>(CREATE_SESSION);
-  const [createParticipant] = useMutation<any>(CREATE_PARTICIPANT);
+  const [loading, setLoading] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const createSession = useMutation(api.sessions.createSession);
+  const createParticipant = useMutation(api.participants.createParticipant);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const session = await createSession({
-      variables: { title },
-    });
-    const result = await createParticipant({
-      variables: {
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      const session = await createSession({ title });
+      const participant = await createParticipant({
         name: username,
-        sessionId: session.data.insert_sessions.returning[0].id,
+        sessionId: session.id,
         owner: true,
-      },
-    });
+      });
 
-    const { id, name, owner } = result.data.insert_participants.returning[0];
-    setUser({ id, name, owner });
+      const { id, name, owner } = participant;
+      setUser({ id, name, owner });
 
-    history.push(`/session/${session.data.insert_sessions.returning[0].uid}`);
+      history.push(`/session/${session.uid}`);
 
-    toast({
-      title: "Session created",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-      position: "top-right",
-    });
+      toast({
+        title: "Session created",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } catch (error) {
+      setErrorMsg("Could not create session");
+      setLoading(false);
+    }
   };
 
   const borderColor = useColorModeValue("gray.300", "gray.600");
@@ -74,7 +65,7 @@ export const CreateSessionForm = () => {
         creating new session..
       </Box>
     );
-  if (error) return <p>Error :( {JSON.stringify(error)} </p>;
+  if (errorMsg) return <p>Error: {errorMsg}</p>;
 
   return (
     <Box
