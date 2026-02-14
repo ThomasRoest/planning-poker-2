@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { JoinSessionForm } from "../components/join-session-form";
 import { VoteForm } from "../components/vote-form";
 import { ParticipantsList } from "../components/participants-list";
-import { useUserContext } from "../userContext";
+import { useUserContext } from "../lib/user-context";
 import copy from "copy-to-clipboard";
 import {
   Badge,
@@ -14,9 +14,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../convex";
+import { api } from "../lib/convex";
 import { LuCopy } from "react-icons/lu";
-import { useThemeColors } from "../themeMode";
+import { useThemeColors } from "../lib/theme";
 import { toaster } from "../components/toaster";
 import { MainCard } from "../components/main-card";
 

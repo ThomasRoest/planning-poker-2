@@ -1,18 +1,11 @@
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useUserContext } from "../userContext";
-import {
-  Box,
-  Input,
-  Button,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { useUserContext } from "../lib/user-context";
+import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import { api } from "../convex";
-import { useThemeColors } from "../themeMode";
+import { api } from "../lib/convex";
+import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
-import { MainCard } from "./main-card";
 
 export const CreateSessionForm = () => {
   const history = useHistory();
@@ -53,22 +46,20 @@ export const CreateSessionForm = () => {
     }
   };
 
-  if (loading)
-    return (
-      <Box color={colors.text}>
-        Loading...
-      </Box>
-    );
+  if (loading) return <Box color={colors.text}>Loading...</Box>;
   if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;
 
   return (
-    <MainCard>
+    <>
       <Heading size="2xl" mb={4} color={colors.text}>
         Create new session
       </Heading>
       <form onSubmit={handleSubmit}>
         <Text fontWeight="600" mb={2} color={colors.text}>
-          Session title <Box as="span" color="red.400">*</Box>
+          Session title{" "}
+          <Box as="span" color="red.400">
+            *
+          </Box>
         </Text>
         <Input
           id="title"
@@ -81,7 +72,10 @@ export const CreateSessionForm = () => {
           }
         />
         <Text fontWeight="600" mb={2} color={colors.text}>
-          Username <Box as="span" color="red.400">*</Box>
+          Username{" "}
+          <Box as="span" color="red.400">
+            *
+          </Box>
         </Text>
         <Input
           id="username"
@@ -96,6 +90,6 @@ export const CreateSessionForm = () => {
           create new session
         </Button>
       </form>
-    </MainCard>
+    </>
   );
 };

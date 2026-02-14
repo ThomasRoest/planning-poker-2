@@ -44,7 +44,7 @@ export const AuthContextProvider = ({
         } else {
           reject({
             success: false,
-			message: "Incorrect password"
+            message: "Incorrect password",
           });
         }
       }, 500);

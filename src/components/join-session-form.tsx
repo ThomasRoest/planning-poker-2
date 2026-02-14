@@ -1,5 +1,5 @@
 import { type ChangeEvent, type FormEvent, useState } from "react";
-import { useUserContext } from "../userContext";
+import { useUserContext } from "../lib/user-context";
 import {
   Box,
   Button,
@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
-import { api } from "../convex";
-import { useThemeColors } from "../themeMode";
+import { api } from "../lib/convex";
+import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
 import { MainCard } from "./main-card";
 interface JoinSessionFormProps {

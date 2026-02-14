@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Layout } from "./components/app-layout";
 import { SessionPage } from "./pages/session-page";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { UserContext, type User } from "./userContext";
+import { UserContext, type User } from "./lib/user-context";
 import About from "./pages/about-page";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import Login from "./pages/login-page";
 import { AuthContextProvider, PrivateRoute } from "./components/auth-provider";
 import { CreateSession } from "./pages/create-session-page";
 import { ConvexProvider } from "convex/react";
-import { convex } from "./convex";
-import { ThemeModeProvider } from "./themeMode";
+import { convex } from "./lib/convex";
+import { ThemeModeProvider } from "./lib/theme";
 import { AppToaster } from "./components/toaster";
 
 const App = () => {

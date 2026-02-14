@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { VoteOptionsGrid } from "./vote-form.styles";
-import { IParticipant } from "../types";
+import { IParticipant } from "../lib/types";
 import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
-import { api } from "../convex";
+import { api } from "../lib/convex";
 import { LuArrowDown, LuArrowUp, LuMinus } from "react-icons/lu";
-import { useThemeColors } from "../themeMode";
+import { useThemeColors } from "../lib/theme";
 
 interface VoteFormProps {
   userId: Id<"participants">;

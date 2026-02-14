@@ -1,5 +1,5 @@
 import { Toaster as HotToaster, toast } from "react-hot-toast";
-import { useThemeColors, useThemeMode } from "../themeMode";
+import { useThemeColors, useThemeMode } from "../lib/theme";
 
 type ToastType = "success" | "error" | "loading" | "info";
 

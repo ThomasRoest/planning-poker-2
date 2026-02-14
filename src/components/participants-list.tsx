@@ -1,6 +1,6 @@
-import { ISession } from "../types";
+import { ISession } from "../lib/types";
 import Confetti from "react-confetti";
-import { useUserContext } from "../userContext";
+import { useUserContext } from "../lib/user-context";
 import {
   Flex,
   Box,
@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import { api } from "../convex";
+import { api } from "../lib/convex";
 import {
   LuArrowDown,
   LuArrowUp,
@@ -20,7 +20,7 @@ import {
   LuMinus,
   LuTrash2,
 } from "react-icons/lu";
-import { useThemeColors } from "../themeMode";
+import { useThemeColors } from "../lib/theme";
 
 const Value = ({ priority }: { priority: string }) => {
   switch (priority) {

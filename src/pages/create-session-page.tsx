@@ -1,5 +1,10 @@
 import { CreateSessionForm } from "../components/create-session-form";
+import { MainCard } from "../components/main-card";
 
 export const CreateSession = () => {
-  return <CreateSessionForm />;
+  return (
+    <MainCard>
+      <CreateSessionForm />
+    </MainCard>
+  );
 };
