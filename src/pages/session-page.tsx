@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { useParams } from "react-router";
 import { JoinSessionForm } from "../components/join-session-form";
 import { VoteForm } from "../components/vote-form";
@@ -23,7 +23,7 @@ import { MainCard } from "../components/main-card";
 
 export const SessionPage = () => {
   const { uid } = useParams<{ uid: string }>();
-  const { user } = React.useContext(UserContext);
+  const { user } = useContext(UserContext);
   const session = useQuery(api.sessions.getByUid, { uid });
   const resetVotes = useMutation(api.participants.resetVotes);
   const colors = useThemeColors();

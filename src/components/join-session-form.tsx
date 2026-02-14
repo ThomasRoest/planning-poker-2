@@ -1,4 +1,4 @@
-import React from "react";
+import { type ChangeEvent, type FormEvent, useContext, useState } from "react";
 import { UserContext } from "../userContext";
 import {
   Box,
@@ -19,14 +19,14 @@ interface JoinSessionFormProps {
 }
 
 export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
-  const [name, setName] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
-  const { setUser } = React.useContext(UserContext);
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const { setUser } = useContext(UserContext);
   const createParticipant = useMutation(api.participants.createParticipant);
   const colors = useThemeColors();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setErrorMsg(null);
@@ -69,7 +69,7 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
           placeholder="Name"
           bg={colors.surface}
           borderColor={colors.border}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
           }
         />

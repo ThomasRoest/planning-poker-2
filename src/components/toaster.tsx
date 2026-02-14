@@ -1,4 +1,3 @@
-import React from "react";
 import { Toaster as HotToaster, toast } from "react-hot-toast";
 import { useThemeColors, useThemeMode } from "../themeMode";
 

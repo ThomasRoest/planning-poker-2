@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Layout } from "./components/app-layout";
 import { SessionPage } from "./pages/session-page";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -14,7 +14,7 @@ import { ThemeModeProvider } from "./themeMode";
 import { AppToaster } from "./components/toaster";
 
 const App = () => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = useState(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <ConvexProvider client={convex}>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Flex, Heading, Icon } from "@chakra-ui/react";
 import { LuMoon, LuSun } from "react-icons/lu";

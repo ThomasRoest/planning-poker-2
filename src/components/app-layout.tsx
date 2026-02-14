@@ -1,10 +1,10 @@
-import React from "react";
+import { type ReactNode } from "react";
 import { AppHeader } from "./app-header";
 import { AppFooter } from "./app-footer";
 import { Box, Container, Grid } from "@chakra-ui/react";
 import { useThemeColors } from "../themeMode";
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   const colors = useThemeColors();
 
   return (

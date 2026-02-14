@@ -1,9 +1,9 @@
-import React from "react";
+import { type ReactNode } from "react";
 import { Box, type BoxProps } from "@chakra-ui/react";
 import { useThemeColors } from "../themeMode";
 
 type MainCardProps = BoxProps & {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const MainCard = ({ children, ...props }: MainCardProps) => {

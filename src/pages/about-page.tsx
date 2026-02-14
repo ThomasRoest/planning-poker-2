@@ -1,5 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import { Text } from "@chakra-ui/react";
 import { useThemeColors } from "../themeMode";
 import { MainCard } from "../components/main-card";
 

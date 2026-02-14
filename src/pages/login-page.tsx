@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import {
   Button,
   Heading,
@@ -42,7 +42,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <Input
           id="wachtwoord"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setPassword(e.target.value)
           }
           type="password"

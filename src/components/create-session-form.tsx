@@ -1,4 +1,4 @@
-import React from "react";
+import { type ChangeEvent, type FormEvent, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../userContext";
 import {
@@ -16,16 +16,16 @@ import { MainCard } from "./main-card";
 
 export const CreateSessionForm = () => {
   const history = useHistory();
-  const { setUser } = React.useContext(UserContext);
-  const [title, setTitle] = React.useState("");
-  const [username, setUsername] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const { setUser } = useContext(UserContext);
+  const [title, setTitle] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const colors = useThemeColors();
   const createSession = useMutation(api.sessions.createSession);
   const createParticipant = useMutation(api.participants.createParticipant);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setErrorMsg(null);
@@ -76,7 +76,7 @@ export const CreateSessionForm = () => {
           mb={4}
           bg={colors.surface}
           borderColor={colors.border}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
           }
         />
@@ -88,7 +88,7 @@ export const CreateSessionForm = () => {
           placeholder="Username"
           bg={colors.surface}
           borderColor={colors.border}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setUsername(e.target.value)
           }
         />

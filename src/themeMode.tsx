@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
 export type AppColorMode = "light" | "dark";
 
@@ -9,7 +9,7 @@ type ThemeModeContextValue = {
 
 const ThemeModeContext = createContext<ThemeModeContextValue | null>(null);
 
-export const ThemeModeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeModeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<AppColorMode>(() => {
     const stored = localStorage.getItem("planning-poker-color-mode");
     return stored === "dark" ? "dark" : "light";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { ISession } from "../types";
 import Confetti from "react-confetti";
 import { UserContext } from "../userContext";
@@ -54,7 +54,7 @@ interface ParticipantProps {
 }
 
 export const ParticipantsList = ({ session }: ParticipantProps) => {
-  const { user } = React.useContext(UserContext);
+  const { user } = useContext(UserContext);
   const deleteUser = useMutation(api.participants.deleteParticipant);
   const colors = useThemeColors();
 

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { VoteOptionsGrid } from "./vote-form.styles";
 import { IParticipant } from "../types";
 import { Box, Button, Icon, Text } from "@chakra-ui/react";
@@ -18,11 +18,11 @@ type Priority = "HIGH" | "LOW" | "MEDIUM" | null;
 export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const createVote = useMutation(api.participants.setVote);
   const setPriority = useMutation(api.participants.setPriority);
-  const [activeVote, setActiveVote] = React.useState<number | null>(null);
-  const [activePriority, setActivePriority] = React.useState<Priority>(null);
+  const [activeVote, setActiveVote] = useState<number | null>(null);
+  const [activePriority, setActivePriority] = useState<Priority>(null);
   const colors = useThemeColors();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const voteIsCleared = (participant: IParticipant) =>
       participant.vote === null;
     const reset: boolean = participants.every(voteIsCleared);
