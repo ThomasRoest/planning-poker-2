@@ -36,7 +36,7 @@ export const AuthContextProvider = ({
   const mockLogin = useCallback((password: string) => {
     return new Promise<{ success: boolean }>((resolve, reject) => {
       setTimeout(() => {
-        if (password === process.env.REACT_APP_PASSWORD) {
+        if (password === import.meta.env.VITE_PASSWORD) {
           setIsAuthenticated(true);
           resolve({
             success: true,

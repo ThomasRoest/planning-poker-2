@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { WebSocketLink } from "apollo-link-ws";
 
 const wsLink = new WebSocketLink({
-  uri: `${process.env.REACT_APP_API_URL}`,
+  uri: import.meta.env.VITE_API_URL,
   options: {
     reconnect: true,
     connectionParams: {
