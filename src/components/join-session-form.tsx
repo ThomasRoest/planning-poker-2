@@ -1,5 +1,4 @@
 import React from "react";
-import { LoadingCube } from "./loading-cube";
 import { UserContext } from "../userContext";
 import {
   Box,
@@ -51,7 +50,7 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
   if (loading)
     return (
       <Box width="50%" color={colors.text}>
-        <LoadingCube />
+        Loading...
       </Box>
     );
   if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;

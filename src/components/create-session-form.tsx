@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { LoadingCube } from "./loading-cube";
 import { UserContext } from "../userContext";
 import {
   Box,
@@ -57,8 +56,7 @@ export const CreateSessionForm = () => {
   if (loading)
     return (
       <Box color={colors.text}>
-        <LoadingCube />
-        creating new session..
+        Loading...
       </Box>
     );
   if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;

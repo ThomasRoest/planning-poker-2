@@ -1,7 +1,9 @@
-import styled from "@emotion/styled";
+import { chakra } from "@chakra-ui/react";
 
-export const VoteOptionsGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-`;
+export const VoteOptionsGrid = chakra("div", {
+  base: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+    gap: "10px"
+  }
+});
