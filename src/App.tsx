@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Layout } from "./components/app-layout";
 import { SessionPage } from "./pages/session-page";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { UserContext } from "./userContext";
+import { UserContext, type User } from "./userContext";
 import About from "./pages/about-page";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import Login from "./pages/login-page";
@@ -14,7 +14,7 @@ import { ThemeModeProvider } from "./themeMode";
 import { AppToaster } from "./components/toaster";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <ConvexProvider client={convex}>

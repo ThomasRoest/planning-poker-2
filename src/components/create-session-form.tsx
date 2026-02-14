@@ -1,6 +1,6 @@
-import { type ChangeEvent, type FormEvent, useContext, useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../userContext";
+import { useUserContext } from "../userContext";
 import {
   Box,
   Input,
@@ -16,7 +16,7 @@ import { MainCard } from "./main-card";
 
 export const CreateSessionForm = () => {
   const history = useHistory();
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
   const [title, setTitle] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);

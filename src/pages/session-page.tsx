@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { useParams } from "react-router";
 import { JoinSessionForm } from "../components/join-session-form";
 import { VoteForm } from "../components/vote-form";
 import { ParticipantsList } from "../components/participants-list";
-import { UserContext } from "../userContext";
+import { useUserContext } from "../userContext";
 import copy from "copy-to-clipboard";
 import {
   Badge,
@@ -23,7 +22,7 @@ import { MainCard } from "../components/main-card";
 
 export const SessionPage = () => {
   const { uid } = useParams<{ uid: string }>();
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const session = useQuery(api.sessions.getByUid, { uid });
   const resetVotes = useMutation(api.participants.resetVotes);
   const colors = useThemeColors();

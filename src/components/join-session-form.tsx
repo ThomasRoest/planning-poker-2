@@ -1,5 +1,5 @@
-import { type ChangeEvent, type FormEvent, useContext, useState } from "react";
-import { UserContext } from "../userContext";
+import { type ChangeEvent, type FormEvent, useState } from "react";
+import { useUserContext } from "../userContext";
 import {
   Box,
   Button,
@@ -22,7 +22,7 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
   const createParticipant = useMutation(api.participants.createParticipant);
   const colors = useThemeColors();
 
@@ -34,7 +34,7 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
     try {
       const participant = await createParticipant({ name, sessionId, owner: false });
 
-      setUser({ id: participant.id, name: participant.name });
+      setUser({ id: participant.id, name: participant.name, owner: false });
 
       toaster.create({
         title: "Joined session",

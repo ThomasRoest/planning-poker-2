@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { ISession } from "../types";
 import Confetti from "react-confetti";
-import { UserContext } from "../userContext";
+import { useUserContext } from "../userContext";
 import {
   Flex,
   Box,
@@ -54,7 +53,7 @@ interface ParticipantProps {
 }
 
 export const ParticipantsList = ({ session }: ParticipantProps) => {
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const deleteUser = useMutation(api.participants.deleteParticipant);
   const colors = useThemeColors();
 
@@ -144,7 +143,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                 {participant.vote !== null && (
                   <Icon as={LuCircleCheck} boxSize="5" color={checkIconColor} mr={2} />
                 )}
-                {user.owner && (
+                {user?.owner && (
                   <Button
                     onClick={() => deleteUser({ participantId: participant.id })}
                     variant="outline"
