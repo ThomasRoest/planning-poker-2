@@ -1,11 +1,12 @@
 import React from "react";
-import { VoteOptionsGrid } from "./styles";
-import { IParticipant } from "../../types";
-import { Box, Button } from "@chakra-ui/react";
-import { ArrowDownIcon, ArrowUpIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { VoteOptionsGrid } from "./vote-form.styles";
+import { IParticipant } from "../types";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import type { Id } from "../../../convex/_generated/dataModel";
-import { api } from "../../convex";
+import type { Id } from "../../convex/_generated/dataModel";
+import { api } from "../convex";
+import { LuArrowDown, LuArrowUp, LuMinus } from "react-icons/lu";
+import { useThemeColors } from "../themeMode";
 
 interface VoteFormProps {
   userId: Id<"participants">;
@@ -19,6 +20,7 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const setPriority = useMutation(api.participants.setPriority);
   const [activeVote, setActiveVote] = React.useState<number | null>(null);
   const [activePriority, setActivePriority] = React.useState<Priority>(null);
+  const colors = useThemeColors();
 
   React.useEffect(() => {
     const voteIsCleared = (participant: IParticipant) =>
@@ -50,7 +52,9 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
             <Button
               key={option}
               size="sm"
-              colorScheme={activeVote === option ? "teal" : "gray"}
+              bg={activeVote === option ? colors.activeVoteBg : colors.neutralButtonBg}
+              color={activeVote === option ? "#0f172a" : colors.neutralButtonColor}
+              fontWeight="700"
               onClick={() => submit(option)}
             >
               {option} points
@@ -59,36 +63,39 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
         })}
       </VoteOptionsGrid>
       <Box mt={5}>
-        <Box as="span" mr={5}>
+        <Text as="span" mr={5} color={colors.text}>
           Value
-        </Box>
+        </Text>
         <Button
           size="sm"
-          rightIcon={<ArrowDownIcon color={activePriority === "LOW" ? "white" : "blue.500"} />}
-          colorScheme={activePriority === "LOW" ? "teal" : "gray"}
+          bg={activePriority === "LOW" ? colors.activeVoteBg : colors.neutralButtonBg}
+          color={activePriority === "LOW" ? "#0f172a" : colors.neutralButtonColor}
           variant="solid"
           mr={2}
           onClick={() => handleSetPriority("LOW")}
         >
+          <Icon as={LuArrowDown} mr={2} color="blue.400" />
           Low
         </Button>
         <Button
           size="sm"
-          rightIcon={<HamburgerIcon color={activePriority === "MEDIUM" ? "white" : "orange.500"} />}
-          colorScheme={activePriority === "MEDIUM" ? "teal" : "gray"}
+          bg={activePriority === "MEDIUM" ? colors.activeVoteBg : colors.neutralButtonBg}
+          color={activePriority === "MEDIUM" ? "#0f172a" : colors.neutralButtonColor}
           variant="solid"
           mr={2}
           onClick={() => handleSetPriority("MEDIUM")}
         >
+          <Icon as={LuMinus} mr={2} color="orange.400" />
           Medium
         </Button>
         <Button
           size="sm"
-          rightIcon={<ArrowUpIcon color={activePriority === "HIGH" ? "white" : "green.500"} />}
-          colorScheme={activePriority === "HIGH" ? "teal" : "gray"}
+          bg={activePriority === "HIGH" ? colors.activeVoteBg : colors.neutralButtonBg}
+          color={activePriority === "HIGH" ? "#0f172a" : colors.neutralButtonColor}
           variant="solid"
           onClick={() => handleSetPriority("HIGH")}
         >
+          <Icon as={LuArrowUp} mr={2} color="green.400" />
           High
         </Button>
       </Box>

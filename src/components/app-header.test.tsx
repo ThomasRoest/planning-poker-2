@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import * as React from "react";
 import { Router } from "react-router";
-import { AppHeader } from ".";
+import { AppHeader } from "./app-header";
 
 describe("<AppHeader />", () => {
   test("Home link should exist and navigate to home when clicked", () => {
@@ -24,7 +24,7 @@ describe("<AppHeader />", () => {
     expect(history.location.pathname).toEqual("/");
   });
 
-  test("About link should exist and navigate to about when clicked", () => {
+  test("Theme toggle button should exist", () => {
     const history = createMemoryHistory();
 
     const Example = () => {
@@ -35,10 +35,7 @@ describe("<AppHeader />", () => {
       );
     };
 
-    const { getByText } = render(<Example />);
-    const linkAbout = getByText("About");
-    userEvent.click(linkAbout);
-
-    expect(history.location.pathname).toEqual("/about");
+    const { getByLabelText } = render(<Example />);
+    expect(getByLabelText("Toggle dark mode")).toBeInTheDocument();
   });
 });

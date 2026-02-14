@@ -1,47 +1,46 @@
 import React from "react";
-import { ISession } from "../../types";
+import { ISession } from "../types";
 import Confetti from "react-confetti";
-import { UserContext } from "../../userContext";
+import { UserContext } from "../userContext";
 import {
   Flex,
   Box,
   List,
-  ListItem,
   Heading,
   Stat,
-  StatLabel,
-  StatNumber,
-  IconButton,
-  useColorModeValue,
+  Button,
+  Icon,
+  Text,
 } from "@chakra-ui/react";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CheckCircleIcon,
-  DeleteIcon,
-  HamburgerIcon,
-} from "@chakra-ui/icons";
 import { useMutation } from "convex/react";
-import { api } from "../../convex";
+import { api } from "../convex";
+import {
+  LuArrowDown,
+  LuArrowUp,
+  LuCircleCheck,
+  LuMinus,
+  LuTrash2,
+} from "react-icons/lu";
+import { useThemeColors } from "../themeMode";
 
 const Value = ({ priority }: { priority: string }) => {
   switch (priority) {
     case "HIGH":
       return (
         <span>
-          <ArrowUpIcon color="green.500" ml={5} mb={1} />
+          <Icon as={LuArrowUp} color="green.500" ml={5} mb={1} />
         </span>
       );
     case "LOW":
       return (
         <span>
-          <ArrowDownIcon color="blue.500" ml={5} mb={1} />
+          <Icon as={LuArrowDown} color="blue.500" ml={5} mb={1} />
         </span>
       );
     case "MEDIUM":
       return (
         <span>
-          <HamburgerIcon color="orange.500" ml={5} mb={1} />
+          <Icon as={LuMinus} color="orange.500" ml={5} mb={1} />
         </span>
       );
 
@@ -57,6 +56,7 @@ interface ParticipantProps {
 export const ParticipantsList = ({ session }: ParticipantProps) => {
   const { user } = React.useContext(UserContext);
   const deleteUser = useMutation(api.participants.deleteParticipant);
+  const colors = useThemeColors();
 
   const votes: number[] = session.participants
     .map((participant) => participant.vote)
@@ -72,19 +72,19 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
 
-  const listItemColor = useColorModeValue("green.100", "green.700");
-  const checkIconColor = useColorModeValue("green.500", "green.300");
+  const listItemColor = colors.rowSuccessBg;
+  const checkIconColor = colors.rowSuccessIcon;
 
   if (typeof result === "number") {
     return (
       <Flex align="center" justifyContent="space-between" mt={5}>
         <Box>
-          <List styleType="none">
+          <List.Root listStyle="none">
             {session.participants.map((participant) => {
               const content = (
-                <Box w="180px" display="flex" justifyContent="space-between">
-                  <span>{participant.name}</span>
-                  <Box minW="45px">
+                <Box w="180px" display="flex" justifyContent="space-between" color={colors.text}>
+                  <Text>{participant.name}</Text>
+                  <Box minW="45px" color={colors.text}>
                     {participant.vote}
                     {participant.priority && (
                       <Value
@@ -96,7 +96,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                 </Box>
               );
               return (
-                <ListItem
+                <List.Item
                   display="flex"
                   mb={1}
                   minWidth="120px"
@@ -104,32 +104,32 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                   key={participant.id}
                 >
                   {content}
-                </ListItem>
+                </List.Item>
               );
             })}
-          </List>
+          </List.Root>
         </Box>
         <Box>
           {consensus && (
-            <Heading as="h3" color="green.500" size="md">
+            <Heading as="h3" color={colors.rowSuccessIcon} size="md">
               Consensus!
               <Confetti numberOfPieces={100} />
             </Heading>
           )}
-          <Stat>
-            <StatLabel>Average</StatLabel>
-            <StatNumber>{result}</StatNumber>
-          </Stat>
+          <Stat.Root>
+            <Stat.Label color={colors.text}>Average</Stat.Label>
+            <Stat.ValueText color={colors.text}>{result}</Stat.ValueText>
+          </Stat.Root>
         </Box>
       </Flex>
     );
   } else {
     return (
-      <List spacing={3} mt={4}>
-        <hr />
+      <List.Root gap={3} mt={4}>
+        <Box borderTop="1px" borderColor={colors.border} />
         {session.participants.map((participant) => {
           return (
-            <ListItem
+            <List.Item
               mb={1}
               display="flex"
               justifyContent="space-between"
@@ -139,24 +139,31 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
               key={participant.id}
               bg={participant.vote === null ? void 0 : listItemColor}
             >
-              <span>{participant.name}</span>
+              <Text color={colors.text}>{participant.name}</Text>
               <Flex align="center">
                 {participant.vote !== null && (
-                  <CheckCircleIcon width="10" color={checkIconColor} />
+                  <Icon as={LuCircleCheck} boxSize="5" color={checkIconColor} mr={2} />
                 )}
                 {user.owner && (
-                  <IconButton
+                  <Button
                     onClick={() => deleteUser({ participantId: participant.id })}
                     variant="outline"
                     aria-label="delete"
-                    icon={<DeleteIcon />}
-                  />
+                    borderColor={colors.border}
+                    color={colors.text}
+                    bg={colors.cardBg}
+                    minW="40px"
+                    h="40px"
+                    p={0}
+                  >
+                    <Icon as={LuTrash2} />
+                  </Button>
                 )}
               </Flex>
-            </ListItem>
+            </List.Item>
           );
         })}
-      </List>
+      </List.Root>
     );
   }
 };

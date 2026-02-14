@@ -1,28 +1,28 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { LoadingCube } from "../LoadingCube";
-import { UserContext } from "../../userContext";
+import { LoadingCube } from "./loading-cube";
+import { UserContext } from "../userContext";
 import {
-  useToast,
   Box,
-  FormControl,
-  FormLabel,
   Input,
   Button,
   Heading,
-  useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import { api } from "../../convex";
+import { api } from "../convex";
+import { useThemeColors } from "../themeMode";
+import { toaster } from "./toaster";
+import { MainCard } from "./main-card";
 
 export const CreateSessionForm = () => {
   const history = useHistory();
-  const toast = useToast();
   const { setUser } = React.useContext(UserContext);
   const [title, setTitle] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const colors = useThemeColors();
   const createSession = useMutation(api.sessions.createSession);
   const createParticipant = useMutation(api.participants.createParticipant);
 
@@ -43,12 +43,10 @@ export const CreateSessionForm = () => {
 
       history.push(`/session/${session.uid}`);
 
-      toast({
+      toaster.create({
         title: "Session created",
-        status: "success",
+        type: "success",
         duration: 3000,
-        isClosable: true,
-        position: "top-right",
       });
     } catch (error) {
       setErrorMsg("Could not create session");
@@ -56,52 +54,50 @@ export const CreateSessionForm = () => {
     }
   };
 
-  const borderColor = useColorModeValue("gray.300", "gray.600");
-
   if (loading)
     return (
-      <Box>
+      <Box color={colors.text}>
         <LoadingCube />
         creating new session..
       </Box>
     );
-  if (errorMsg) return <p>Error: {errorMsg}</p>;
+  if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;
 
   return (
-    <Box
-      border="1px"
-      borderColor={borderColor}
-      padding="5"
-      borderRadius="3"
-    >
-      <Heading size="lg" mb={4}>
+    <MainCard>
+      <Heading size="2xl" mb={4} color={colors.text}>
         Create new session
       </Heading>
       <form onSubmit={handleSubmit}>
-        <FormControl isRequired mb={4}>
-          <FormLabel htmlFor="title">Session title</FormLabel>
-          <Input
-            id="title"
-            placeholder="Title"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="username">Username</FormLabel>
-          <Input
-            id="username"
-            placeholder="Username"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setUsername(e.target.value)
-            }
-          />
-        </FormControl>
-        <Button type="submit" colorScheme="teal" mt={4}>
+        <Text fontWeight="600" mb={2} color={colors.text}>
+          Session title <Box as="span" color="red.400">*</Box>
+        </Text>
+        <Input
+          id="title"
+          placeholder="Title"
+          mb={4}
+          bg={colors.surface}
+          borderColor={colors.border}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
+        />
+        <Text fontWeight="600" mb={2} color={colors.text}>
+          Username <Box as="span" color="red.400">*</Box>
+        </Text>
+        <Input
+          id="username"
+          placeholder="Username"
+          bg={colors.surface}
+          borderColor={colors.border}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUsername(e.target.value)
+          }
+        />
+        <Button type="submit" mt={4} bg={colors.brand} color="white">
           create new session
         </Button>
       </form>
-    </Box>
+    </MainCard>
   );
 };

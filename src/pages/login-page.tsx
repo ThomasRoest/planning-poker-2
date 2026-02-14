@@ -1,22 +1,21 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import {
-  Box,
   Button,
-  FormControl,
   Heading,
   Input,
-  useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
-import { useAuthContext } from "../../components/Auth/AuthProvider";
+import { useAuthContext } from "../components/auth-provider";
 import { useHistory } from "react-router";
+import { useThemeColors } from "../themeMode";
+import { MainCard } from "../components/main-card";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
   const [submitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const borderColor = useColorModeValue("gray.300", "gray.600");
+  const colors = useThemeColors();
 
   const { signIn } = useAuthContext();
 
@@ -36,26 +35,31 @@ const Login = () => {
   );
 
   return (
-    <Box border="1px" borderColor={borderColor} padding="5" borderRadius="3">
-      <Heading size="lg" mb={4}>
+    <MainCard>
+      <Heading size="lg" mb={4} color={colors.text}>
         Login
       </Heading>
       <form onSubmit={handleSubmit}>
-        <FormControl isRequired>
-          <Input
-            id="wachtwoord"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            type="password"
-          />
-        </FormControl>
-        {errorMsg && <p>Incorrect password.</p>}
-        <Button type="submit" colorScheme="teal" mt={4} isLoading={submitting}>
+        <Input
+          id="wachtwoord"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
+          type="password"
+          bg={colors.surface}
+          borderColor={colors.border}
+          color={colors.text}
+        />
+        {errorMsg && (
+          <Text mt={2} color="red.400">
+            Incorrect password.
+          </Text>
+        )}
+        <Button type="submit" mt={4} loading={submitting} bg={colors.brand} color="white">
           Submit
         </Button>
       </form>
-    </Box>
+    </MainCard>
   );
 };
 
