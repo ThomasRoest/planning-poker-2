@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { ChangeEvent, SubmitEvent, useCallback, useState } from "react";
 import {
   Button,
   Heading,
@@ -20,7 +20,7 @@ const Login = () => {
   const { signIn } = useAuthContext();
 
   const handleSubmit = useCallback(
-    async (event: FormEvent) => {
+    async (event: SubmitEvent<HTMLFormElement>) => {
       event.preventDefault();
       setIsSubmitting(true);
       try {
