@@ -1,5 +1,5 @@
-import { mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { mutation } from "./_generated/server";
 
 const priorityValidator = v.union(
   v.literal("LOW"),
@@ -15,8 +15,12 @@ export const createParticipant = mutation({
     owner: v.boolean(),
   },
   handler: async (ctx, args) => {
+    const name = args.name.trim();
+    if (!name) {
+      throw new Error("Name is required");
+    }
     const id = await ctx.db.insert("participants", {
-      name: args.name,
+      name,
       sessionId: args.sessionId,
       owner: args.owner,
       vote: null,
@@ -25,7 +29,7 @@ export const createParticipant = mutation({
 
     return {
       id,
-      name: args.name,
+      name,
       owner: args.owner,
     };
   },

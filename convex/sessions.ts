@@ -4,17 +4,18 @@ import { v } from "convex/values";
 export const createSession = mutation({
   args: { title: v.string() },
   handler: async (ctx, args) => {
+    const title = args.title.trim();
     const uid = crypto.randomUUID();
     const createdAt = Date.now();
     const id = await ctx.db.insert("sessions", {
-      title: args.title,
+      title,
       uid,
       createdAt,
     });
 
     return {
       id,
-      title: args.title,
+      title,
       uid,
       created_at: createdAt,
     };

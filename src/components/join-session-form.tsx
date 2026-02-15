@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useState } from "react";
 import { useUserContext } from "../lib/user-context";
 import {
   Box,
@@ -13,6 +13,7 @@ import { api } from "../lib/convex";
 import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
 import { MainCard } from "./main-card";
+
 interface JoinSessionFormProps {
   sessionId: Id<"sessions">;
   title: string;
@@ -26,16 +27,22 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
   const createParticipant = useMutation(api.participants.createParticipant);
   const colors = useThemeColors();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const normalizedName = name.trim();
+    if (!normalizedName) {
+      setErrorMsg("Name is required");
+      return;
+    }
+    
     setLoading(true);
-    setErrorMsg(null);
-
     try {
-      const participant = await createParticipant({ name, sessionId, owner: false });
-
+      const participant = await createParticipant({
+        name: normalizedName,
+        sessionId,
+        owner: false,
+      });
       setUser({ id: participant.id, name: participant.name, owner: false });
-
       toaster.create({
         title: "Joined session",
         type: "success",
@@ -43,17 +50,10 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
       });
     } catch (error) {
       setErrorMsg("Could not join session");
+    } finally {
       setLoading(false);
     }
   };
-
-  if (loading)
-    return (
-      <Box width="50%" color={colors.text}>
-        Loading...
-      </Box>
-    );
-  if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;
 
   return (
     <MainCard>
@@ -69,12 +69,18 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
           placeholder="Name"
           bg={colors.surface}
           borderColor={colors.border}
+          value={name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
           }
         />
+        {errorMsg ? (
+          <Text color="red.400" mt={3}>
+            Error: {errorMsg}
+          </Text>
+        ) : null}
         <Button type="submit" mt={4} bg={colors.brand} color="white">
-          Join session
+          {loading ? "Joining session..." : "Join session"}
         </Button>
       </form>
     </MainCard>

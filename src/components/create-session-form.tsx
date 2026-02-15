@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../lib/user-context";
 import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
@@ -18,14 +18,26 @@ export const CreateSessionForm = () => {
   const createSession = useMutation(api.sessions.createSession);
   const createParticipant = useMutation(api.participants.createParticipant);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
     setErrorMsg(null);
+
+    const normalizedTitle = title.trim();
+    const normalizedUsername = username.trim();
+    if (!normalizedTitle) {
+      setErrorMsg("Session title is required");
+      return;
+    }
+    if (!normalizedUsername) {
+      setErrorMsg("Username is required");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const session = await createSession({ title });
+      const session = await createSession({ title: normalizedTitle });
       const participant = await createParticipant({
-        name: username,
+        name: normalizedUsername,
         sessionId: session.id,
         owner: true,
       });
@@ -42,12 +54,10 @@ export const CreateSessionForm = () => {
       });
     } catch (error) {
       setErrorMsg("Could not create session");
+    } finally {
       setLoading(false);
     }
   };
-
-  if (loading) return <Box color={colors.text}>Loading...</Box>;
-  if (errorMsg) return <Text color="red.400">Error: {errorMsg}</Text>;
 
   return (
     <>
@@ -67,6 +77,7 @@ export const CreateSessionForm = () => {
           mb={4}
           bg={colors.surface}
           borderColor={colors.border}
+          value={title}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
           }
@@ -82,13 +93,19 @@ export const CreateSessionForm = () => {
           placeholder="Username"
           bg={colors.surface}
           borderColor={colors.border}
+          value={username}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setUsername(e.target.value)
           }
         />
         <Button type="submit" mt={4} bg={colors.brand} color="white">
-          create new session
+          {loading ? "Creating session..." : "Create session"}
         </Button>
+        {errorMsg ? (
+          <Text color="red.400" mt={3}>
+            Error: {errorMsg}
+          </Text>
+        ) : null}
       </form>
     </>
   );
