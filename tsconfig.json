@@ -18,10 +18,7 @@
     "noEmit": true,
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
-    "types": [
-      "vite/client",
-      "vitest/globals"
-    ]
+    "types": ["vite/client"]
   },
   "include": [
     "src",
