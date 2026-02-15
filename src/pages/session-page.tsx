@@ -6,7 +6,6 @@ import { useUserContext } from "../lib/user-context";
 import copy from "copy-to-clipboard";
 import {
   Badge,
-  Box,
   Button,
   Flex,
   Heading,
@@ -37,12 +36,13 @@ export const SessionPage = () => {
   const resetVotes = useMutation(api.participants.resetVotes);
   const colors = useThemeColors();
 
-  if (session === undefined)
+  if (session === undefined) {
     return (
-      <Box width="50%" color={colors.text}>
-        Loading..
-      </Box>
+      <MainCard minH="200px">
+        <Text color={colors.text}>Loading...</Text>
+      </MainCard>
     );
+  }
 
   if (session === null) {
     return <Text color={colors.text}>Session not found.</Text>;
