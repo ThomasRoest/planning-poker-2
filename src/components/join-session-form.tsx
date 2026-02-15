@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
-import { api } from "../lib/convex";
+import { api } from "../lib/convex-client";
 import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
 import { MainCard } from "./main-card";

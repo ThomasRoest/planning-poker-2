@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../lib/convex";
+import { api } from "../lib/convex-client";
 import { LuCopy } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme";
 import { toaster } from "../components/toaster";

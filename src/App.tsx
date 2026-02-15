@@ -9,7 +9,7 @@ import Login from "./pages/login-page";
 import { AuthContextProvider, PrivateRoute } from "./components/auth-provider";
 import { CreateSession } from "./pages/create-session-page";
 import { ConvexProvider } from "convex/react";
-import { convex } from "./lib/convex";
+import { convex } from "./lib/convex-client";
 import { ThemeModeProvider } from "./lib/theme";
 import { AppToaster } from "./components/toaster";
 

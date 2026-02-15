@@ -1,4 +1,4 @@
-import { ISession } from "../lib/types";
+import type { Priority, Session } from "../lib/convex-types";
 import Confetti from "react-confetti";
 import { useUserContext } from "../lib/user-context";
 import {
@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import { api } from "../lib/convex";
+import { api } from "../lib/convex-client";
 import {
   LuArrowDown,
   LuArrowUp,
@@ -21,8 +21,9 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme";
+import { ReactElement } from "react";
 
-const Value = ({ priority }: { priority: string }) => {
+const Value = ({ priority }: { priority: Exclude<Priority, null> }): ReactElement => {
   switch (priority) {
     case "HIGH":
       return (
@@ -42,14 +43,11 @@ const Value = ({ priority }: { priority: string }) => {
           <Icon as={LuMinus} color="orange.500" ml={5} mb={1} />
         </span>
       );
-
-    default:
-      return null;
   }
 };
 
 interface ParticipantProps {
-  session: ISession;
+  session: Session;
 }
 
 export const ParticipantsList = ({ session }: ParticipantProps) => {

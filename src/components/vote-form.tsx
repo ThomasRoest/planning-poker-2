@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { VoteOptionsGrid } from "./vote-form.styles";
-import { IParticipant } from "../lib/types";
 import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
-import { api } from "../lib/convex";
+import { api } from "../lib/convex-client";
+import type { Participant, Priority } from "../lib/convex-types";
 import { LuArrowDown, LuArrowUp, LuMinus } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme";
 
 interface VoteFormProps {
   userId: Id<"participants">;
-  participants: IParticipant[];
+  participants: Participant[];
 }
-
-type Priority = "HIGH" | "LOW" | "MEDIUM" | null;
 
 export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const createVote = useMutation(api.participants.setVote);
@@ -23,8 +21,7 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const colors = useThemeColors();
 
   useEffect(() => {
-    const voteIsCleared = (participant: IParticipant) =>
-      participant.vote === null;
+    const voteIsCleared = (participant: Participant) => participant.vote === null;
     const reset: boolean = participants.every(voteIsCleared);
     if (reset) {
       setActiveVote(null);

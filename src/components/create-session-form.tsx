@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useUserContext } from "../lib/user-context";
 import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
-import { api } from "../lib/convex";
+import { api } from "../lib/convex-client";
 import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
 
