@@ -1,5 +1,5 @@
 import { type ChangeEvent, type SubmitEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../lib/user-context";
 import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
@@ -8,7 +8,7 @@ import { useThemeColors } from "../lib/theme";
 import { toaster } from "./toaster";
 
 export const CreateSessionForm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setUser } = useUserContext();
   const [title, setTitle] = useState("");
   const [username, setUsername] = useState("");
@@ -45,7 +45,7 @@ export const CreateSessionForm = () => {
       const { id, name, owner } = participant;
       setUser({ id, name, owner });
 
-      history.push(`/session/${session.uid}`);
+      navigate(`/session/${session.uid}`);
 
       toaster.create({
         title: "Session created",

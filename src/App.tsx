@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Layout } from "./components/app-layout";
 import { SessionPage } from "./pages/session-page";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { UserContext, type User } from "./lib/user-context";
 import About from "./pages/about-page";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
@@ -23,20 +23,19 @@ const App = () => {
             <AuthContextProvider>
               <Router>
                 <Layout>
-                  <Switch>
-                    <PrivateRoute path="/create-session">
-                      <CreateSession />
-                    </PrivateRoute>
-                    <Route path="/session/:uid">
-                      <SessionPage />
-                    </Route>
-                    <Route path="/about">
-                      <About />
-                    </Route>
-                    <Route path="/">
-                      <Login />
-                    </Route>
-                  </Switch>
+                  <Routes>
+                    <Route
+                      path="/create-session"
+                      element={
+                        <PrivateRoute>
+                          <CreateSession />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route path="/session/:uid" element={<SessionPage />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/" element={<Login />} />
+                  </Routes>
                 </Layout>
                 <AppToaster />
               </Router>

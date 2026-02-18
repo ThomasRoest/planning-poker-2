@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Redirect, Route } from "react-router";
+import { Navigate } from "react-router-dom";
 
 interface AuthContextValue {
   signIn: (value: string) => Promise<{ success: boolean }>;
@@ -63,27 +63,12 @@ export const AuthContextProvider = ({
 
 export const PrivateRoute = ({
   children,
-  path,
 }: {
   children: ReactNode;
-  path: string;
-}) => {
-  let auth = useAuthContext();
-  return (
-    <Route
-      path={path}
-      render={({ location }) =>
-        auth.isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
+}): ReactElement => {
+  const auth = useAuthContext();
+  if (!auth.isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
 };

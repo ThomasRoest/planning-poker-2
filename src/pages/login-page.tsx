@@ -6,13 +6,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useAuthContext } from "../components/auth-provider";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../lib/theme";
 import { MainCard } from "../components/main-card";
 
 const Login = () => {
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
   const [submitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const colors = useThemeColors();
@@ -25,13 +25,13 @@ const Login = () => {
       setIsSubmitting(true);
       try {
         await signIn(password);
-        history.push("/create-session");
+        navigate("/create-session");
       } catch (error) {
         setIsSubmitting(false);
         setErrorMsg("incorrect password");
       }
     },
-    [history, password, signIn]
+    [navigate, password, signIn]
   );
 
   return (

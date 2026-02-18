@@ -32,7 +32,7 @@ const copyToClipboard = () => {
 export const SessionPage = () => {
   const { uid } = useParams<{ uid: string }>();
   const { user } = useUserContext();
-  const session = useQuery(api.sessions.getByUid, { uid });
+  const session = useQuery(api.sessions.getByUid, { uid: uid ?? "" });
   const resetVotes = useMutation(api.participants.resetVotes);
   const colors = useThemeColors();
 
