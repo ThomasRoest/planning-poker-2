@@ -95,9 +95,8 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
               return (
                 <List.Item
                   display="flex"
-                  mb={1}
-                  minWidth="120px"
-                  justifyContent="space-between"
+                  alignItems="center"
+                  height={8}
                   key={participant.id}
                 >
                   {content}
