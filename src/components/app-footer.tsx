@@ -6,7 +6,7 @@ export const AppFooter = () => {
 
   return (
     <Box padding={5} bg={colors.footerBg} color={colors.text}>
-      Planning poker
+      V2
     </Box>
   );
 };
