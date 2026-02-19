@@ -45,15 +45,15 @@ export const useThemeColors = () => {
 
   return {
     isDark,
-    appBg: isDark ? "#111827" : "#f3f5f7",
-    surface: isDark ? "#141c2f" : "#f3f5f7",
+    appBg: isDark ? "#111827" : "#fbfcfc",
+    surface: isDark ? "#141c2f" : "#fbfcfc",
     footerBg: isDark ? "#1c2638" : "#d7dde5",
     border: isDark ? "#2f3f5f" : "#bfc8d4",
     text: isDark ? "#d7dde8" : "#232d3a",
     heading: isDark ? "#6d7e9a" : "#64748b",
     mutedText: isDark ? "#9ba9bf" : "#6f7f94",
     brand: "#2d9897",
-    cardBg: isDark ? "#141c2f" : "#f3f5f7",
+    cardBg: isDark ? "#141c2f" : "#fbfcfc",
     cardShadow: isDark
       ? "0 0 0 rgba(0, 0, 0, 0)"
       : "0 2px 4px rgba(15, 23, 42, 0.10), 0 10px 24px rgba(15, 23, 42, 0.08)",
