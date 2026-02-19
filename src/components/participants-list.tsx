@@ -1,5 +1,4 @@
 import type { Priority, Session } from "../lib/convex-types";
-import Confetti from "react-confetti";
 import { useUserContext } from "../lib/user-context";
 import {
   Flex,
@@ -22,6 +21,7 @@ import {
 } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme";
 import { ReactElement } from "react";
+import { RenderConfetti } from "./confetti";
 
 const Value = ({ priority }: { priority: Exclude<Priority, null> }): ReactElement => {
   switch (priority) {
@@ -109,7 +109,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
           {consensus && (
             <Heading as="h3" color={colors.rowSuccessIcon} size="md">
               Consensus!
-              <Confetti numberOfPieces={100} />
+              <RenderConfetti />
             </Heading>
           )}
           <Stat.Root>
