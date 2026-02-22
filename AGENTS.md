@@ -6,24 +6,26 @@ This is a Vite + React + TypeScript planning poker app using Convex for backend 
 - `src/`: application code
 - `src/components/`: flat component files (e.g., `app-header.tsx`, `main-card.tsx`, `vote-form.tsx`, `toaster.tsx`)
 - `src/pages/`: flat page files (e.g., `login-page.tsx`, `create-session-page.tsx`, `session-page.tsx`, `about-page.tsx`)
-- `src/themeMode.tsx`: app light/dark mode state + shared color tokens
+- `src/lib/theme.tsx`: app light/dark mode state + shared color tokens
+- `src/lib/useGetSession.ts`: session route UUID validation + Convex session query hook
 - `convex/`: schema and backend functions (`schema.ts`, `sessions.ts`, `participants.ts`)
+- `tests/`: Playwright end-to-end tests (`*.spec.ts`)
 - `public/`: static assets
 - `design/`: screenshot references used for UI parity checks
 - `index.html`: Vite HTML entrypoint
-- `vite.config.ts`: Vite + Vitest config
+- `vite.config.ts`: Vite config
+- `playwright.config.ts`: Playwright test config
 
-Keep tests close to code using `*.test.tsx` (example: `src/components/app-header.test.tsx`).
+Keep end-to-end tests in `tests/` using `*.spec.ts`.
 
 ## Build, Test, and Development Commands
 - `npm run dev`: start local dev server with Vite.
 - `npm run build`: create production bundle in `dist/`.
 - `npm run preview`: preview the production build locally.
-- `npm run test`: run unit/component tests with Vitest.
-- `npm run test -- --run`: run tests once (non-watch, CI-style).
+- `npm run test`: run end-to-end tests with Playwright.
+- `npm run test:ui`: open Playwright UI mode.
 - `npm run convex:dev`: run Convex dev/codegen loop.
 - `npx tsc --noEmit`: typecheck project without emitting files.
-- `npm run test:e2e`: open Cypress runner.
 
 ## Coding Style & Naming Conventions
 - Language: TypeScript (`.ts`/`.tsx`) with React function components.
@@ -36,10 +38,10 @@ Keep tests close to code using `*.test.tsx` (example: `src/components/app-header
 - Reuse `MainCard` and `useThemeColors()` for primary screen containers; avoid duplicating card layout styles.
 
 ## Testing Guidelines
-- Frameworks: Vitest + Testing Library (`jsdom` environment).
-- Test files: `*.test.tsx`, colocated with the component/module under test.
-- Focus on user-visible behavior (rendering, navigation, interactions) over implementation details.
-- For routing behavior, use memory history/router patterns similar to existing tests.
+- Framework: Playwright end-to-end tests.
+- Test files: `tests/*.spec.ts`.
+- Focus on user-visible behavior and core flows (login, session creation, session interactions).
+- Configure Playwright with local Vite `webServer` and environment variables (`VITE_PASSWORD`, `VITE_CONVEX_URL`).
 - For UI changes, verify against screenshots in `design/` (light and dark mode where applicable).
 
 ## Commit & Pull Request Guidelines
