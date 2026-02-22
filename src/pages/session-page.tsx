@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import { JoinSessionForm } from "../components/join-session-form";
 import { VoteForm } from "../components/vote-form";
 import { ParticipantsList } from "../components/participants-list";
@@ -12,12 +11,13 @@ import {
   Icon,
   Text,
 } from "@chakra-ui/react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "../lib/convex-client";
+import { useMutation } from "convex/react";
 import { LuCopy } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme";
 import { toaster } from "../components/toaster";
 import { MainCard } from "../components/main-card";
+import { useGetSession } from "../lib/useGetSession";
+import { api } from "../lib/convex-client";
 
 const copyToClipboard = () => {
   const url = window.location.href;
@@ -30,11 +30,18 @@ const copyToClipboard = () => {
 };
 
 export const SessionPage = () => {
-  const { uid } = useParams<{ uid: string }>();
   const { user } = useUserContext();
-  const session = useQuery(api.sessions.getByUid, { uid: uid ?? "" });
+  const { isValidUid, session } = useGetSession();
   const resetVotes = useMutation(api.participants.resetVotes);
   const colors = useThemeColors();
+
+  if (!isValidUid) {
+    return (
+      <MainCard minH="200px">
+        <Text color={colors.text}>Invalid session link.</Text>
+      </MainCard>
+    );
+  }
 
   if (session === undefined) {
     return (
