@@ -12,6 +12,7 @@ import { ConvexProvider } from "convex/react";
 import { convex } from "./lib/convex-client";
 import { ThemeModeProvider } from "./lib/theme";
 import { AppToaster } from "./components/toaster";
+import NotFoundPage from "./pages/not-found-page";
 
 const App = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -35,6 +36,7 @@ const App = () => {
                     <Route path="/session/:uid" element={<SessionPage />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/" element={<Login />} />
+                    <Route path="*" element={<NotFoundPage />} />
                   </Routes>
                 </Layout>
                 <AppToaster />
