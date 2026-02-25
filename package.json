@@ -27,6 +27,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "check": "tsc --noEmit",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui"
   },
