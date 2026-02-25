@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { VoteOptionsGrid } from "./vote-form.styles";
 import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
@@ -16,26 +15,18 @@ interface VoteFormProps {
 export const VoteForm = ({ userId, participants }: VoteFormProps) => {
   const createVote = useMutation(api.participants.setVote);
   const setPriority = useMutation(api.participants.setPriority);
-  const [activeVote, setActiveVote] = useState<number | null>(null);
-  const [activePriority, setActivePriority] = useState<Priority>(null);
   const colors = useThemeColors();
-
-  useEffect(() => {
-    const voteIsCleared = (participant: Participant) => participant.vote === null;
-    const reset: boolean = participants.every(voteIsCleared);
-    if (reset) {
-      setActiveVote(null);
-      setActivePriority(null);
-    }
-  }, [participants]);
+  const currentParticipant = participants.find(
+    (participant: Participant) => participant.id === userId
+  );
+  const activeVote = currentParticipant?.vote ?? null;
+  const activePriority = currentParticipant?.priority ?? null;
 
   const submit = (vote: number) => {
-    setActiveVote(vote);
     createVote({ participantId: userId, vote });
   };
 
   const handleSetPriority = (priority: Priority) => {
-    setActivePriority(priority);
     setPriority({ participantId: userId, priority });
   };
 
