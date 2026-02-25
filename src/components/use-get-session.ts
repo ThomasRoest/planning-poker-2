@@ -1,7 +1,7 @@
 import { useQuery } from "convex/react";
 import { useParams } from "react-router";
 import { z } from "zod";
-import { api } from "./convex-client";
+import { api } from "../lib/convex-client";
 
 const sessionUidSchema = z.uuid();
 

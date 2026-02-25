@@ -16,7 +16,7 @@ import { LuCopy } from "react-icons/lu";
 import { useThemeColors } from "../lib/theme/use-theme-colors";
 import { toaster } from "../lib/toaster";
 import { MainCard } from "../components/main-card";
-import { useGetSession } from "../lib/use-get-session";
+import { useGetSession } from "../components/use-get-session";
 import { api } from "../lib/convex-client";
 
 const copyToClipboard = () => {
