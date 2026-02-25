@@ -52,7 +52,7 @@ export const CreateSessionForm = () => {
         type: "success",
         duration: 3000,
       });
-    } catch (error) {
+    } catch {
       setErrorMsg("Could not create session");
     } finally {
       setLoading(false);

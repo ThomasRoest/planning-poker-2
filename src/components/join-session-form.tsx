@@ -48,7 +48,7 @@ export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
         type: "success",
         duration: 3000,
       });
-    } catch (error) {
+    } catch {
       setErrorMsg("Could not join session");
     } finally {
       setLoading(false);

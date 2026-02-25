@@ -26,7 +26,7 @@ const Login = () => {
       try {
         await signIn(password);
         navigate("/create-session");
-      } catch (error) {
+      } catch {
         setIsSubmitting(false);
         setErrorMsg("incorrect password");
       }
