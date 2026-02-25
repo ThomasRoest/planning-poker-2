@@ -1,7 +1,7 @@
 import { Button, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { MainCard } from "../components/main-card";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
 
 const NotFoundPage = () => {
   const colors = useThemeColors();

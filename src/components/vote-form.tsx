@@ -5,7 +5,7 @@ import type { Id } from "../../convex/_generated/dataModel";
 import { api } from "../lib/convex-client";
 import type { Participant, Priority } from "../lib/convex-types";
 import { LuArrowDown, LuArrowUp, LuMinus } from "react-icons/lu";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
 
 interface VoteFormProps {
   userId: Id<"participants">;

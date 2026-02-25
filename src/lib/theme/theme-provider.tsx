@@ -1,13 +1,5 @@
-import { createContext, type ReactNode, useEffect, useMemo, useState } from "react";
-
-export type AppColorMode = "light" | "dark";
-
-type ThemeModeContextValue = {
-  mode: AppColorMode;
-  toggleMode: () => void;
-};
-
-export const ThemeModeContext = createContext<ThemeModeContextValue | null>(null);
+import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type AppColorMode, ThemeModeContext } from "./theme-context";
 
 export const ThemeModeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<AppColorMode>(() => {
@@ -29,5 +21,3 @@ export const ThemeModeProvider = ({ children }: { children: ReactNode }) => {
 
   return <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>;
 };
-
-

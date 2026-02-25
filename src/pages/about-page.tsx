@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/react";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
 import { MainCard } from "../components/main-card";
 
 const About = () => {

@@ -2,17 +2,17 @@ import { useState } from "react";
 import { Layout } from "./components/app-layout";
 import { SessionPage } from "./pages/session-page";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserContext, type User } from "./lib/user-context";
+import { UserContext, type User } from "./lib/auth/user-context";
 import About from "./pages/about-page";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import Login from "./pages/login-page";
-import { AuthContextProvider, PrivateRoute } from "./components/auth-provider";
 import { CreateSession } from "./pages/create-session-page";
 import { ConvexProvider } from "convex/react";
 import { convex } from "./lib/convex-client";
-import { ThemeModeProvider } from "./lib/theme";
-import { AppToaster } from "./components/toaster";
+import { ThemeModeProvider } from "./lib/theme/theme-provider";
+import { AppToaster } from "./components/app-toaster";
 import NotFoundPage from "./pages/not-found-page";
+import { AuthContextProvider, PrivateRoute } from "./lib/auth/auth-provider";
 
 const App = () => {
   const [user, setUser] = useState<User | null>(null);

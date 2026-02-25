@@ -1,5 +1,5 @@
 import type { Priority, Session } from "../lib/convex-types";
-import { useUserContext } from "../lib/user-context";
+import { useUserContext } from "../lib/auth/user-context";
 import {
   Flex,
   Box,
@@ -19,7 +19,7 @@ import {
   LuMinus,
   LuTrash2,
 } from "react-icons/lu";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
 import { ReactElement } from "react";
 import { RenderConfetti } from "./confetti";
 

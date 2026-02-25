@@ -5,9 +5,9 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useAuthContext } from "../components/auth-provider";
+import { useAuthContext } from "../lib/auth/auth-context";
 import { useNavigate } from "react-router-dom";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
 import { MainCard } from "../components/main-card";
 
 const Login = () => {

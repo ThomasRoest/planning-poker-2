@@ -1,5 +1,5 @@
 import { type ChangeEvent, type SubmitEvent, useState } from "react";
-import { useUserContext } from "../lib/user-context";
+import { useUserContext } from "../lib/auth/user-context";
 import {
   Box,
   Button,
@@ -10,8 +10,8 @@ import {
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
 import { api } from "../lib/convex-client";
-import { useThemeColors } from "../lib/use-theme-colors";
-import { toaster } from "./toaster";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
+import { toaster } from "../lib/toaster";
 import { MainCard } from "./main-card";
 
 interface JoinSessionFormProps {

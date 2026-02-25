@@ -1,30 +1,12 @@
 import {
-  createContext,
   type ReactElement,
   type ReactNode,
   useCallback,
-  useContext,
   useMemo,
   useState,
 } from "react";
 import { Navigate } from "react-router-dom";
-
-interface AuthContextValue {
-  signIn: (value: string) => Promise<{ success: boolean }>;
-  isAuthenticated: boolean;
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null);
-
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-
-  if (context === null) {
-    throw new Error("Expected AuthContext");
-  }
-
-  return context;
-};
+import { AuthContext, useAuthContext } from "./auth-context";
 
 export const AuthContextProvider = ({
   children,

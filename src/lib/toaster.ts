@@ -1,6 +1,4 @@
-import { Toaster as HotToaster, toast } from "react-hot-toast";
-import { useThemeMode } from "../lib/use-theme-mode";
-import { useThemeColors } from "../lib/use-theme-colors";
+import { toast } from "react-hot-toast";
 
 type ToastType = "success" | "error" | "loading" | "info";
 
@@ -29,25 +27,4 @@ export const toaster = {
 
     return toast(message, { duration, icon: "ℹ️" });
   },
-};
-
-export const AppToaster = () => {
-  const colors = useThemeColors();
-  const { mode } = useThemeMode();
-
-  return (
-    <HotToaster
-      key={mode}
-      position="top-right"
-      toastOptions={{
-        duration: 3000,
-        style: {
-          border: `1px solid ${colors.border}`,
-          background: colors.cardBg,
-          color: colors.text,
-          boxShadow: colors.cardShadow,
-        },
-      }}
-    />
-  );
 };

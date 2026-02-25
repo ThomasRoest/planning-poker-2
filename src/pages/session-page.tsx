@@ -1,7 +1,7 @@
 import { JoinSessionForm } from "../components/join-session-form";
 import { VoteForm } from "../components/vote-form";
 import { ParticipantsList } from "../components/participants-list";
-import { useUserContext } from "../lib/user-context";
+import { useUserContext } from "../lib/auth/user-context";
 import copy from "copy-to-clipboard";
 import {
   Badge,
@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import { LuCopy } from "react-icons/lu";
-import { useThemeColors } from "../lib/use-theme-colors";
-import { toaster } from "../components/toaster";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
+import { toaster } from "../lib/toaster";
 import { MainCard } from "../components/main-card";
-import { useGetSession } from "../lib/useGetSession";
+import { useGetSession } from "../lib/use-get-session";
 import { api } from "../lib/convex-client";
 
 const copyToClipboard = () => {

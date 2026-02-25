@@ -1,11 +1,11 @@
 import { type ChangeEvent, type SubmitEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../lib/user-context";
+import { useUserContext } from "../lib/auth/user-context";
 import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import { api } from "../lib/convex-client";
-import { useThemeColors } from "../lib/use-theme-colors";
-import { toaster } from "./toaster";
+import { useThemeColors } from "../lib/theme/use-theme-colors";
+import { toaster } from "../lib/toaster";
 
 export const CreateSessionForm = () => {
   const navigate = useNavigate();
