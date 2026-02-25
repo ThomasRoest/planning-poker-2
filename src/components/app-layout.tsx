@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { AppHeader } from "./app-header";
 import { AppFooter } from "./app-footer";
 import { Box, Container, Grid } from "@chakra-ui/react";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const colors = useThemeColors();

@@ -10,7 +10,7 @@ import {
 import { useMutation } from "convex/react";
 import type { Id } from "../../convex/_generated/dataModel";
 import { api } from "../lib/convex-client";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 import { toaster } from "./toaster";
 import { MainCard } from "./main-card";
 

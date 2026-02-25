@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Box, type BoxProps } from "@chakra-ui/react";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 
 type MainCardProps = BoxProps & {
   children: ReactNode;

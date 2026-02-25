@@ -4,7 +4,7 @@ import { useUserContext } from "../lib/user-context";
 import { Box, Input, Button, Heading, Text } from "@chakra-ui/react";
 import { useMutation } from "convex/react";
 import { api } from "../lib/convex-client";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 import { toaster } from "./toaster";
 
 export const CreateSessionForm = () => {

@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { useAuthContext } from "../components/auth-provider";
 import { useNavigate } from "react-router-dom";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 import { MainCard } from "../components/main-card";
 
 const Login = () => {

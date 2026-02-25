@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button, Flex, Heading, Icon } from "@chakra-ui/react";
 import { LuMoon, LuSun } from "react-icons/lu";
-import { useThemeColors, useThemeMode } from "../lib/theme";
+import { useThemeMode } from "../lib/use-theme-mode";
+import { useThemeColors } from "../lib/use-theme-colors";
 
 export const AppHeader = () => {
   const { mode, toggleMode } = useThemeMode();

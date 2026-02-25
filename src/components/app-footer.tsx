@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { useThemeColors } from "../lib/theme";
+import { useThemeColors } from "../lib/use-theme-colors";
 
 export const AppFooter = () => {
   const colors = useThemeColors();
